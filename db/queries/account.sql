@@ -11,12 +11,12 @@ SELECT * FROM accounts WHERE id = $1 LIMIT 1;
 
 -- name: ListAccounts :many
 
-select * from accounts order by id limit $1 offset $2;
+SELECT * FROM accounts ORDER BY id LIMIT $1 OFFSET $2;
 
 -- name: UpdateAccount :one
 
-UPDATE accounts set balance = $2 where id = $1 returning *;
+UPDATE accounts SET balance = $2 WHERE id = $1 RETURNING *;
 
 -- name: DeleteAccount :exec
 
-DELETE from accounts where id = $1;
+DELETE FROM accounts WHERE id = $1;
