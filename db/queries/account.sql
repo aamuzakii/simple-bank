@@ -17,6 +17,6 @@ select * from accounts order by id limit $1 offset $2;
 
 UPDATE accounts set balance = $2 where id = $1 returning *;
 
--- name:DeleteAccount :exec
+-- name: DeleteAccount :exec
 
 DELETE from accounts where id = $1;
