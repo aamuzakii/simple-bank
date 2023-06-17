@@ -38,7 +38,7 @@ func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (A
 
 const deleteAccount = `-- name: DeleteAccount :exec
 
-DELETE from accounts where id = $1
+DELETE FROM accounts WHERE id = $1
 `
 
 func (q *Queries) DeleteAccount(ctx context.Context, id int64) error {
@@ -66,7 +66,7 @@ func (q *Queries) GetAccount(ctx context.Context, id int64) (Account, error) {
 
 const listAccounts = `-- name: ListAccounts :many
 
-select id, owner, balance, currency, created_at from accounts order by id limit $1 offset $2
+SELECT id, owner, balance, currency, created_at FROM accounts ORDER BY id LIMIT $1 OFFSET $2
 `
 
 type ListAccountsParams struct {
@@ -105,7 +105,7 @@ func (q *Queries) ListAccounts(ctx context.Context, arg ListAccountsParams) ([]A
 
 const updateAccount = `-- name: UpdateAccount :one
 
-UPDATE accounts set balance = $2 where id = $1 returning id, owner, balance, currency, created_at
+UPDATE accounts SET balance = $2 WHERE id = $1 RETURNING id, owner, balance, currency, created_at
 `
 
 type UpdateAccountParams struct {
