@@ -15,7 +15,7 @@ func main() {
 	g := gin.Recovery()
 	fmt.Println(g)
 
-	dbString := "host=localhost port=5432 user=postgres password=secret dbname=knex_db sslmode=disable"
+	dbString := "host=localhost port=5432 user=postgres password=secret dbname=sequelize sslmode=disable"
 
 	dbConn, err := sql.Open("postgres", dbString)
 	if err != nil {
@@ -62,8 +62,4 @@ func createAccountTest(ctx context.Context, dbConn *sql.DB) {
 
 	fmt.Println("Retrieved account:", account)
 
-	// Other database operations within the transaction can be performed here
-	// ...
-
-	// If everything is successful, the transaction will be committed at the end
 }
