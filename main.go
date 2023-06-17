@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 
+	db "github.com/aamuzakii/simplebank/db/sqlc"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -24,12 +25,22 @@ func main() {
 
 	ctx := context.Background()
 
-	// Ping the database to test the connection
-	err = db.PingContext(ctx)
-	if err != nil {
-		log.Fatal("failed to ping the database:", err)
+	createAccountTest(ctx, db)
+
+}
+
+func createAccountTest(ctx context.Context, db *db.Queries) {
+	params := db.CreateAccountParams{
+		Owner:    "John Doe",
+		Balance:  1000,
+		Currency: "USD",
 	}
 
-	fmt.Println("Connected to the database!")
+	account, err := db.CreateAccount(ctx, params)
+	if err != nil {
+		log.Println("failed to create account:", err)
+		return
+	}
 
+	fmt.Println("Created account:", account)
 }
