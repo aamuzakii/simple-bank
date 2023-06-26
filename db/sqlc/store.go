@@ -55,6 +55,42 @@ type TransferTxResult struct {
 }
 
 // create trf record, add account entries, update account balance
-func (store *Store) TransferTx(ctx string, arg TransferTxParams) (TransferTxResult, error) {
+// func (store *Store) TransferTx(ctx string, arg TransferTxParams) (TransferTxResult, error) {
 
-}
+// 	var result TransferTxResult
+
+// 	err := store.execTx(ctx, func(q *Queries) error {
+// 		var err error
+
+// 		result.Transfer, err := q.CreateTransfer(ctx, CreateTransferParams{
+// 			FromAccountID: arg.AkunIDSumber,
+// 			ToAccountID:   arg.AkunIDTujuan,
+// 			Amount:        arg.Jumlah,
+// 		})
+
+// 		if err != nil {
+// 			return err
+// 		}
+
+// 		result.FromEntry, err := q.CreateEntry(ctx, CreateEntryParams{
+// 			AccountID: arg.AkunIDSumber,
+// 			Amount:    -arg.Jumlah,
+// 		})
+
+// 		if err != nil {
+// 			return err
+// 		}
+
+// 		result.ToEntry, err := q.CreateEntry(ctx, CreateEntryParams{
+// 			AccountID: arg.AkunIDSumber,
+// 			Amount:    -arg.Jumlah,
+// 		})
+
+// 		if err != nil {
+// 			return err
+// 		}
+
+// 		return nil
+
+// 	})
+// }
