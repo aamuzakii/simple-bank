@@ -54,43 +54,45 @@ type TransferTxResult struct {
 	ToEntry     Entry    `json:"to_entry"`
 }
 
+var txKey = struct{}{} // it its empty struct & second bracket means we create empty object
+
 // create trf record, add account entries, update account balance
-// func (store *Store) TransferTx(ctx string, arg TransferTxParams) (TransferTxResult, error) {
+func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error) {
 
-// 	var result TransferTxResult
+	var result TransferTxResult
 
-// 	err := store.execTx(ctx, func(q *Queries) error {
-// 		var err error
+	err := store.execTx(ctx, func(q *Queries) error {
+		var err error
 
-// 		result.Transfer, err := q.CreateTransfer(ctx, CreateTransferParams{
-// 			FromAccountID: arg.AkunIDSumber,
-// 			ToAccountID:   arg.AkunIDTujuan,
-// 			Amount:        arg.Jumlah,
-// 		})
+		result.Transfer, err := q.CreateTransfer(ctx, CreateTransferParams{
+			FromAccountID: arg.AkunIDSumber,
+			ToAccountID:   arg.AkunIDTujuan,
+			Amount:        arg.Jumlah,
+		})
 
-// 		if err != nil {
-// 			return err
-// 		}
+		if err != nil {
+			return err
+		}
 
-// 		result.FromEntry, err := q.CreateEntry(ctx, CreateEntryParams{
-// 			AccountID: arg.AkunIDSumber,
-// 			Amount:    -arg.Jumlah,
-// 		})
+		result.FromEntry, err := q.CreateEntry(ctx, CreateEntryParams{
+			AccountID: arg.AkunIDSumber,
+			Amount:    -arg.Jumlah,
+		})
 
-// 		if err != nil {
-// 			return err
-// 		}
+		if err != nil {
+			return err
+		}
 
-// 		result.ToEntry, err := q.CreateEntry(ctx, CreateEntryParams{
-// 			AccountID: arg.AkunIDSumber,
-// 			Amount:    -arg.Jumlah,
-// 		})
+		result.ToEntry, err := q.CreateEntry(ctx, CreateEntryParams{
+			AccountID: arg.AkunIDSumber,
+			Amount:    -arg.Jumlah,
+		})
 
-// 		if err != nil {
-// 			return err
-// 		}
+		if err != nil {
+			return err
+		}
 
-// 		return nil
+		return nil
 
-// 	})
-// }
+	})
+}
