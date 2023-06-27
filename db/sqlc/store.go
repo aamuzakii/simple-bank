@@ -42,8 +42,8 @@ func (store *Store) execTx(ctx context.Context, fn func(*Queries) error) error {
 
 type TransferTxParams struct {
 	AkunIDSumber int64 `json:"from_account_id"`
-	AkunIDTujuan int64 `json:"from_account_id"`
-	Jumlah       int64 `json:"from_account_id"`
+	AkunIDTujuan int64 `json:"to_account_id"`
+	Jumlah       int64 `json:"amount"`
 }
 
 type TransferTxResult struct {
@@ -54,7 +54,7 @@ type TransferTxResult struct {
 	ToEntry     Entry    `json:"to_entry"`
 }
 
-var txKey = struct{}{} // it its empty struct & second bracket means we create empty object
+// var txKey = struct{}{} // it its empty struct & second bracket means we create empty object
 
 // create trf record, add account entries, update account balance
 func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error) {
