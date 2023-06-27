@@ -58,13 +58,12 @@ var txKey = struct{}{} // it its empty struct & second bracket means we create e
 
 // create trf record, add account entries, update account balance
 func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error) {
-
 	var result TransferTxResult
 
 	err := store.execTx(ctx, func(q *Queries) error {
 		var err error
 
-		result.Transfer, err := q.CreateTransfer(ctx, CreateTransferParams{
+		result.Transfer, err = q.CreateTransfer(ctx, CreateTransferParams{
 			FromAccountID: arg.AkunIDSumber,
 			ToAccountID:   arg.AkunIDTujuan,
 			Amount:        arg.Jumlah,
@@ -74,7 +73,7 @@ func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (Trans
 			return err
 		}
 
-		result.FromEntry, err := q.CreateEntry(ctx, CreateEntryParams{
+		result.FromEntry, err = q.CreateEntry(ctx, CreateEntryParams{
 			AccountID: arg.AkunIDSumber,
 			Amount:    -arg.Jumlah,
 		})
@@ -83,9 +82,9 @@ func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (Trans
 			return err
 		}
 
-		result.ToEntry, err := q.CreateEntry(ctx, CreateEntryParams{
-			AccountID: arg.AkunIDSumber,
-			Amount:    -arg.Jumlah,
+		result.ToEntry, err = q.CreateEntry(ctx, CreateEntryParams{
+			AccountID: arg.AkunIDTujuan, // Corrected parameter
+			Amount:    arg.Jumlah,       // Corrected sign
 		})
 
 		if err != nil {
@@ -93,6 +92,7 @@ func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (Trans
 		}
 
 		return nil
-
 	})
+
+	return result, err
 }
